@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Қола дәуірі</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  >
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <h2>ҚОЛА ДӘУІРІ</h2>
+
+  <div class="header-right">
+
+    <button
+      class="header-button"
+      onclick="showSearch()"
+    >
+      🔍 Іздеу
+    </button>
+
+    <button
+      class="header-button"
+      onclick="showSettings()"
+    >
+      👤 Баптаулар
+    </button>
+
+  </div>
+
+</header>
+
+
+
+<!-- ІЗДЕУ -->
+
+<div
+  id="search-box"
+  class="popup-box"
+>
+
+  <div class="popup-inner">
+
+    <button
+      class="close-popup"
+      onclick="closePopup()"
+    >
+      ✕
+    </button>
+
+    <h2>🔍 Іздеу</h2>
+
+    <input
+      id="search-input"
+      type="text"
+      placeholder="Мысалы: Беғазы"
+    >
+
+    <button
+      class="search-button"
+      onclick="searchSite()"
+    >
+      Іздеу
+    </button>
+
+    <p id="search-result"></p>
+
+  </div>
+
+</div>
+
+
+
+<!-- БАПТАУЛАР -->
+
+<div
+  id="settings-box"
+  class="popup-box"
+>
+
+  <div class="popup-inner">
+
+    <button
+      class="close-popup"
+      onclick="closePopup()"
+    >
+      ✕
+    </button>
+
+    <h2>👤 Баптаулар</h2>
+
+    <p>
+      Бұл бөлім сайттың сыртқы көрінісін басқаруға арналған.
+    </p>
+
+    <button
+      class="setting-button"
+      onclick="changeFontSize('normal')"
+    >
+      Қалыпты мәтін
+    </button>
+
+    <button
+      class="setting-button"
+      onclick="changeFontSize('large')"
+    >
+      Үлкен мәтін
+    </button>
+
+  </div>
+
+</div>
+
+
+
+<!-- БАСТЫ БЕТ -->
+
+<div id="home">
+
+  <div class="hero-banner">
+
+    <img
+      src="./banner.png"
+      alt="Қазақстандағы қола дәуірі"
+    >
+
+  </div>
+
+
+  <section class="hero">
+
+    <div class="subtitle">
+      ҚАЗАҚСТАННЫҢ ЕЖЕЛГІ ТАРИХЫ
+    </div>
+
+    <h1>ҚОЛА ДӘУІРІ</h1>
+
+    <p>
+      Қола дәуірі — адамзат тарихындағы маңызды кезеңдердің бірі.
+      Бұл уақытта адамдар металды өңдеуді меңгеріп, мыс пен қалайыны
+      қосып, қола жасауды үйренді.
+    </p>
+
+    <p>
+      Қазақстан жерінде қола дәуірінде көптеген тайпалар өмір сүрді.
+      Олар мал шаруашылығымен, егіншілікпен, металл өңдеумен және
+      қолөнермен айналысты.
+    </p>
+
+    <p>
+      Осы кезеңнен Қазақстан аумағында көптеген археологиялық
+      ескерткіштер, қорымдар және жартас суреттері сақталған.
+    </p>
+
+  </section>
+
+
+  <section class="cards-section">
+
+    <h2>ЗЕРТТЕУ БӨЛІМДЕРІ</h2>
+
+    <div class="cards">
+
+      <div
+        class="card"
+        onclick="openPage('periods')"
+      >
+        <div class="card-icon">🕰️</div>
+
+        <h3>Қола дәуірінің кезеңдері</h3>
+
+        <p>
+          Қола дәуірінің негізгі кезеңдері.
+        </p>
+      </div>
+
+
+      <div
+        class="card"
+        onclick="openPage('monuments')"
+      >
+        <div class="card-icon">📍</div>
+
+        <h3>Ескерткіштері</h3>
+
+        <p>
+          Қазақстандағы белгілі археологиялық ескерткіштер.
+        </p>
+      </div>
+
+
+      <div
+        class="card"
+        onclick="openPage('people')"
+      >
+        <div class="card-icon">👥</div>
+
+        <h3>Адамдардың өмірі</h3>
+
+        <p>
+          Қола дәуіріндегі адамдардың тұрмысы мен кәсібі.
+        </p>
+      </div>
+
+
+      <div
+        class="card"
+        onclick="openPage('artifacts')"
+      >
+        <div class="card-icon">🛠️</div>
+
+        <h3>Археологиялық заттар</h3>
+
+        <p>
+          Археологиялық қазбалардан табылған бұйымдар.
+        </p>
+      </div>
+
+
+      <div
+        class="card"
+        onclick="openPage('petroglyphs')"
+      >
+        <div class="card-icon">🪨</div>
+
+        <h3>Петроглифтер</h3>
+
+        <p>
+          Жартастарға салынған ежелгі суреттер.
+        </p>
+      </div>
+
+
+      <div
+        class="card"
+        onclick="openPage('map')"
+      >
+        <div class="card-icon">🗺️</div>
+
+        <h3>Интерактивті карта</h3>
+
+        <p>
+          Қазақстандағы 30 археологиялық нысан.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+
+
+<!-- КЕЗЕҢДЕР -->
+
+<main
+  id="periods"
+  class="info-page"
+>
+
+  <button
+    class="back-button"
+    onclick="goHome()"
+  >
+    ← Басты бетке
+  </button>
+
+  <div class="info-content">
+
+    <div class="subtitle">
+      ҚОЛА ДӘУІРІ
+    </div>
+
+    <h1>Қола дәуірінің кезеңдері</h1>
+
+    <p class="intro">
+      Қазақстандағы қола дәуірі бірнеше кезеңге бөлінеді.
+      Әр кезеңде адамдардың шаруашылығы мен мәдениетінде
+      маңызды өзгерістер болды.
+    </p>
+
+    <div class="info-grid">
+
+      <div class="period-card">
+
+        <div class="big-icon">🌅</div>
+
+        <h2>Ерте қола дәуірі</h2>
+
+        <p>
+          Б.з.б. XVIII–XVI ғасырлар.
+          Бұл кезеңде металл өңдеу мен қола жасау
+          дами бастады.
+        </p>
+
+      </div>
+
+
+      <div class="period-card">
+
+        <div class="big-icon">🔥</div>
+
+        <h2>Орта қола дәуірі</h2>
+
+        <p>
+          Б.з.б. XVI–XIII ғасырлар.
+          Мал шаруашылығы, егіншілік және
+          металлургия кеңінен дамыды.
+        </p>
+
+      </div>
+
+
+      <div class="period-card">
+
+        <div class="big-icon">🏺</div>
+
+        <h2>Кейінгі қола дәуірі</h2>
+
+        <p>
+          Б.з.б. XIII–VIII ғасырлар.
+          Ірі қоныстар мен мәдени орталықтар
+          қалыптасты.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <h2>📌 Қысқаша</h2>
+
+      <p>
+        Қола дәуірі — Қазақстан тарихындағы металлургия,
+        мал шаруашылығы, егіншілік және қолөнер ерекше
+        дамыған кезең.
+      </p>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<!-- ЕСКЕРТКІШТЕР -->
+
+<main
+  id="monuments"
+  class="info-page"
+>
+
+  <button
+    class="back-button"
+    onclick="goHome()"
+  >
+    ← Басты бетке
+  </button>
+
+  <div class="info-content">
+
+    <div class="subtitle">
+      АРХЕОЛОГИЯ
+    </div>
+
+    <h1>Қола дәуірінің ескерткіштері</h1>
+
+    <p class="intro">
+      Қазақстан аумағынан қола дәуіріне жататын көптеген
+      археологиялық нысандар табылған.
+    </p>
+
+    <div class="info-grid">
+
+      <div class="monument-card">
+
+        <div class="big-icon">🧭</div>
+
+        <h2>Солтүстік Қазақстан</h2>
+
+        <p>
+          Петровка II, Боголюбово I, Амангелді I,
+          Новоникольское және басқа ескерткіштер белгілі.
+        </p>
+
+      </div>
+
+
+      <div class="monument-card">
+
+        <div class="big-icon">⛰️</div>
+
+        <h2>Орталық Қазақстан</h2>
+
+        <p>
+          Беғазы, Дәндібай, Кент, Бұғылы және Атасу
+          сияқты маңызды археологиялық нысандар бар.
+        </p>
+
+      </div>
+
+
+      <div class="monument-card">
+
+        <div class="big-icon">🌄</div>
+
+        <h2>Оңтүстік Қазақстан</h2>
+
+        <p>
+          Тегіскен, Таутары, Асы, Тұрген және басқа
+          ескерткіштер зерттелген.
+        </p>
+
+      </div>
+
+
+      <div class="monument-card">
+
+        <div class="big-icon">🏜️</div>
+
+        <h2>Батыс Қазақстан</h2>
+
+        <p>
+          Тоқсанбай, Жаңа Қазан және Сор-Айдын
+          сияқты ескерткіштер белгілі.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<!-- АДАМДАРДЫҢ ӨМІРІ -->
+
+<main
+  id="people"
+  class="info-page"
+>
+
+  <button
+    class="back-button"
+    onclick="goHome()"
+  >
+    ← Басты бетке
+  </button>
+
+  <div class="info-content">
+
+    <div class="subtitle">
+      ҚОҒАМ ЖӘНЕ ТҰРМЫС
+    </div>
+
+    <h1>Адамдардың өмірі</h1>
+
+    <p class="intro">
+      Қола дәуіріндегі адамдар табиғат жағдайына бейімделіп,
+      мал шаруашылығын, егіншілікті және металл өңдеуді дамытты.
+    </p>
+
+    <div class="info-grid">
+
+      <div class="life-card">
+
+        <div class="big-icon">🐎</div>
+
+        <h2>Мал шаруашылығы</h2>
+
+        <p>
+          Адамдар жылқы, қой, ешкі және сиыр сияқты
+          жануарларды өсірді.
+        </p>
+
+      </div>
+
+
+      <div class="life-card">
+
+        <div class="big-icon">🌾</div>
+
+        <h2>Егіншілік</h2>
+
+        <p>
+          Бидай, арпа және басқа дақылдар өсірілді.
+          Егіншілік көбіне су көздеріне жақын дамыды.
+        </p>
+
+      </div>
+
+
+      <div class="life-card">
+
+        <div class="big-icon">🔥</div>
+
+        <h2>Металл өңдеу</h2>
+
+        <p>
+          Мыс пен қалайыны пайдаланып,
+          қола бұйымдар жасалды.
+        </p>
+
+      </div>
+
+
+      <div class="life-card">
+
+        <div class="big-icon">🏠</div>
+
+        <h2>Тұрғын үйлер</h2>
+
+        <p>
+          Адамдар тас, ағаш және саз сияқты
+          материалдардан тұрғын үйлер тұрғызды.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<!-- АРХЕОЛОГИЯЛЫҚ ЗАТТАР -->
+
+<main
+  id="artifacts"
+  class="info-page"
+>
+
+  <button
+    class="back-button"
+    onclick="goHome()"
+  >
+    ← Басты бетке
+  </button>
+
+  <div class="info-content">
+
+    <div class="subtitle">
+      АРХЕОЛОГИЯЛЫҚ МҰРА
+    </div>
+
+    <h1>Археологиялық заттар</h1>
+
+    <p class="intro">
+      Археологиялық қазбалардан қола дәуіріндегі
+      адамдардың тұрмысын көрсететін көптеген
+      заттар табылған.
+    </p>
+
+    <div class="info-grid">
+
+      <div class="artifact-card">
+
+        <div class="big-icon">🛡️</div>
+
+        <h2>Қару-жарақ</h2>
+
+        <p>
+          Археологиялық ескерткіштерден әртүрлі
+          металл бұйымдар мен қару түрлері кездеседі.
+        </p>
+
+      </div>
+
+
+      <div class="artifact-card">
+
+        <div class="big-icon">🔨</div>
+
+        <h2>Еңбек құралдары</h2>
+
+        <p>
+          Еңбек құралдары егіншілікке,
+          мал шаруашылығына және қолөнерге пайдаланылды.
+        </p>
+
+      </div>
+
+
+      <div class="artifact-card">
+
+        <div class="big-icon">🏺</div>
+
+        <h2>Қыш ыдыстар</h2>
+
+        <p>
+          Қыш ыдыстар тамақ сақтау және
+          күнделікті тұрмыста қолданылған.
+        </p>
+
+      </div>
+
+
+      <div class="artifact-card">
+
+        <div class="big-icon">💍</div>
+
+        <h2>Әшекейлер</h2>
+
+        <p>
+          Қола, сүйек және басқа материалдардан
+          әшекей бұйымдар жасалған.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<!-- ПЕТРОГЛИФТЕР -->
+
+<main
+  id="petroglyphs"
+  class="info-page"
+>
+
+  <button
+    class="back-button"
+    onclick="goHome()"
+  >
+    ← Басты бетке
+  </button>
+
+  <div class="info-content">
+
+    <div class="subtitle">
+      ЖАРТАСТАҒЫ ӨНЕР
+    </div>
+
+    <h1>Петроглифтер</h1>
+
+    <p class="intro">
+      Петроглифтер — адамдардың жартастарға қашап
+      немесе ойып салған ежелгі суреттері.
+    </p>
+
+    <div class="info-grid">
+
+      <div class="artifact-card">
+
+        <div class="big-icon">🪨</div>
+
+        <h2>Петроглиф деген не?</h2>
+
+        <p>
+          Петроглифтер ежелгі адамдардың өмірі
+          мен дүниетанымы туралы ақпарат береді.
+        </p>
+
+      </div>
+
+
+      <div class="artifact-card">
+
+        <div class="big-icon">🏹</div>
+
+        <h2>Аңшылық көріністері</h2>
+
+        <p>
+          Жартастарда аң аулау және жануарлар
+          бейнелері жиі кездеседі.
+        </p>
+
+      </div>
+
+
+      <div class="artifact-card">
+
+        <div class="big-icon">👥</div>
+
+        <h2>Адамдар мен жануарлар</h2>
+
+        <p>
+          Кейбір суреттерде адамдар, жылқылар,
+          бұғылар және басқа жануарлар бейнеленген.
+        </p>
+
+      </div>
+
+
+      <div class="artifact-card">
+
+        <div class="big-icon">☀️</div>
+
+        <h2>Ғұрыптық көріністер</h2>
+
+        <p>
+          Кейбір бейнелер ежелгі адамдардың
+          дүниетанымы мен ғұрыптарын көрсетеді.
+        </p>
+
+      </div>
+
+
+      <div class="artifact-card">
+
+        <div class="big-icon">📍</div>
+
+        <h2>Белгілі орындар</h2>
+
+        <p>
+          Қазақстандағы белгілі петроглиф орындарына
+          Тамғалы мен Қаратау жатады.
+        </p>
+
+      </div>
+
+
+      <div class="artifact-card">
+
+        <div class="big-icon">🔎</div>
+
+        <h2>Нені көрсетеді?</h2>
+
+        <p>
+          Петроглифтер арқылы ежелгі адамдардың
+          шаруашылығы, табиғаты және мәдениеті
+          туралы білуге болады.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<!-- КАРТА -->
+
+<main
+  id="map"
+  class="info-page"
+>
+
+  <button
+    class="back-button"
+    onclick="goHome()"
+  >
+    ← Басты бетке
+  </button>
+
+  <div class="info-content">
+
+    <div class="subtitle">
+      АРХЕОЛОГИЯЛЫҚ КАРТА
+    </div>
+
+    <h1>
+      Қола дәуірінің ескерткіштері картасы
+    </h1>
+
+    <p class="intro">
+      Қазақстан аумағындағы қола дәуіріне қатысты
+      археологиялық нысандар картада көрсетілген.
+    </p>
+
+
+    <div class="map-legend">
+
+      <span>
+        <i class="legend-dot west"></i>
+        Батыс
+      </span>
+
+      <span>
+        <i class="legend-dot south"></i>
+        Оңтүстік
+      </span>
+
+      <span>
+        <i class="legend-dot central"></i>
+        Орталық
+      </span>
+
+      <span>
+        <i class="legend-dot north"></i>
+        Солтүстік
+      </span>
+
+      <span>
+        <i class="legend-dot east"></i>
+        Шығыс
+      </span>
+
+    </div>
+
+
+    <!-- НАҚТЫ LEAFLET КАРТАСЫ -->
+
+    <div id="kazakhstan-map"></div>
+
+
+    <div class="summary-box">
+
+      <h2>🗺️ Карта туралы</h2>
+
+      <p>
+        Картада Қазақстанның әр аймағындағы
+        30 археологиялық нысан көрсетілген.
+      </p>
+
+      <p>
+        Түрлі түсті нүктелер Қазақстанның бес
+        негізгі аймағын білдіреді.
+      </p>
+
+      <p class="small-note">
+        Кейбір нысандардың нақты ашық GPS координаталары
+        болмағандықтан, орналасуы картада шамамен көрсетілген.
+      </p>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+
+<footer>
+
+  <p>
+    ҚОЛА ДӘУІРІ • ҚАЗАҚСТАННЫҢ ЕЖЕЛГІ ТАРИХЫ
+  </p>
+
+</footer>
+
+
+
+<!-- LEAFLET -->
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+
+<!-- БІЗДІҢ JAVASCRIPT -->
+
+<script src="script.js"></script>
+
+
+</body>
+  </html>
